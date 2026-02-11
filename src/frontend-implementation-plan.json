@@ -1,0 +1,222 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Inventory, Customers, and Quotes (authenticated) management frontend",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Add Internet Identity authentication gating so Inventory, Customers, and Quotes are inaccessible until signed in, with logout clearing cached data.",
+      "acceptanceCriteria": [
+        "Unauthenticated users are prompted to sign in with Internet Identity before any app data is shown.",
+        "After sign-in, the user can access the app without errors and can sign out to end the session."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the app shell + routing and enforce authenticated-only access to Inventory/Customers/Quotes by checking `useInternetIdentity().identity`; show a dedicated sign-in screen when unauthenticated. Use the selected `authorization` component patterns for sign-in gating and session clearing. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/LoginButton.tsx",
+          "operation": "create",
+          "description": "Add a Login/Logout button using `useInternetIdentity` and clear React Query cache on logout (per selected `authorization` component guidance). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/AccessDeniedScreen.tsx",
+          "operation": "create",
+          "description": "Create an AccessDeniedScreen to display when the backend indicates the caller is unauthorized (e.g., role is guest) and provide a clear call-to-action to sign in again. Use the selected `authorization` component guidance for handling authorization failures. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useAuthz.ts",
+          "operation": "create",
+          "description": "Add a small authz helper hook that uses `useActor()` + backend methods (e.g., `getCallerUserRole`, `isCallerAdmin`) to derive `isAuthenticated` and role-based UI flags and to normalize authorization errors for display. Use the selected `authorization` component guidance for error handling. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/main.tsx",
+          "operation": "modify",
+          "description": "Ensure the React Query client is available app-wide for cache clearing on logout and for gating initial data fetching until authentication is resolved."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Wire the Inventory UI to existing backend inventory capabilities (products) for create/read/update/delete and stock adjustments.",
+      "acceptanceCriteria": [
+        "Backend exposes methods to create, list, fetch by id, update, and delete inventory items.",
+        "Each inventory item includes at least: id, name, SKU (string), unit price (number), stock quantity (integer), optional description.",
+        "Stock quantity can be incremented/decremented via a dedicated method and persists across page refreshes."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/inventory/useProducts.ts",
+          "operation": "create",
+          "description": "Create React Query hooks wrapping backend capabilities for products: list, get by id, create, update, delete, and adjust stock; invalidate relevant queries after mutations."
+        },
+        {
+          "path": "frontend/src/utils/format.ts",
+          "operation": "create",
+          "description": "Add shared formatting helpers used by Inventory/Quotes (e.g., currency formatting, bigint-to-number display helpers) to keep UI consistent."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Implement Inventory screens: searchable list, create/edit/delete form, and stock increment/decrement controls.",
+      "acceptanceCriteria": [
+        "Inventory list displays items with key fields (name, SKU, unit price, stock).",
+        "User can create a new item, edit an existing item, and delete an item from the UI.",
+        "User can adjust stock (add/remove) and see the updated stock reflected immediately after the operation completes.",
+        "Search/filter can narrow the list by at least name or SKU."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/inventory/InventoryListPage.tsx",
+          "operation": "create",
+          "description": "Create Inventory list page with search/filter (name and id/SKU equivalent) and table/list rendering of key fields. Compose existing shadcn/ui components (e.g., input, button, table, card, dialog) without modifying immutable UI component sources. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/inventory/InventoryItemForm.tsx",
+          "operation": "create",
+          "description": "Create a reusable create/edit form for inventory items (name, id/SKU, unit price, description, stock quantity display) and submit via `useProducts` mutations. Compose existing shadcn/ui components. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/inventory/InventoryItemDetailPage.tsx",
+          "operation": "create",
+          "description": "Create item detail/edit page including stock adjustment controls (increment/decrement) calling the stock adjustment mutation and reflecting changes immediately after completion. Compose existing shadcn/ui components. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register Inventory routes and add navigation wiring so the Inventory list and item detail pages are reachable only when authenticated."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Wire the Customers UI to existing backend customer capabilities for create/read/update/delete and list retrieval.",
+      "acceptanceCriteria": [
+        "Backend exposes methods to create, list, fetch by id, update, and delete customers.",
+        "Each customer includes at least: id, full name, email (optional), phone (optional), billing address (optional), notes (optional).",
+        "Customer data persists across page refreshes."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/customers/useCustomers.ts",
+          "operation": "create",
+          "description": "Create React Query hooks wrapping backend capabilities for customers: list, get by id, create, update, delete; invalidate relevant queries after mutations."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Implement Customers screens: searchable list, create/edit form, profile view, and delete flow.",
+      "acceptanceCriteria": [
+        "Customers list displays customers and supports searching by at least name or email/phone.",
+        "User can create, edit, and delete customers from the UI.",
+        "Selecting a customer shows an editable customer profile view."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/customers/CustomersListPage.tsx",
+          "operation": "create",
+          "description": "Create Customers list page with search (name and email/phone fields) and navigation to customer detail. Compose existing shadcn/ui components (input, button, table, card, dialog). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/customers/CustomerForm.tsx",
+          "operation": "create",
+          "description": "Create a reusable create/edit customer form (name, email, phone, address, and optional notes UI field if supported) integrated with `useCustomers` mutations. Compose existing shadcn/ui components. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/customers/CustomerDetailPage.tsx",
+          "operation": "create",
+          "description": "Create editable customer profile view that loads by id, supports update, and includes a delete flow with confirmation. Compose existing shadcn/ui components. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register Customers routes and add navigation wiring so the Customers list and detail pages are reachable only when authenticated."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Wire the Quotes UI to existing backend quote capabilities for creating quotes with line items and viewing lists/details with computed totals.",
+      "acceptanceCriteria": [
+        "A quote is associated with a customer and contains: id, customerId, status (e.g., Draft/Sent/Accepted), createdAt, line items, subtotal, optional discount, optional tax, total.",
+        "Line items support referencing an inventory item (by itemId) and include quantity and unit price snapshot at time of quoting.",
+        "Backend computes subtotal/total deterministically from stored fields and returns totals to the frontend.",
+        "Backend exposes methods to create a quote, add/update/remove line items, list quotes, and fetch quote by id."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/quotes/useQuotes.ts",
+          "operation": "create",
+          "description": "Create React Query hooks wrapping backend capabilities for quotes: list, list by customer, get by id, create quote; ensure queries invalidate after creation and that totals are read from backend responses."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Implement Quotes screens: create quote (select customer + add inventory line items), quotes list, and quote detail view with totals.",
+      "acceptanceCriteria": [
+        "User can create a new quote by selecting a customer and adding one or more inventory items as line items.",
+        "Quote UI shows calculated subtotal/tax/discount/total and updates when line items change.",
+        "User can view a list of existing quotes and open a quote detail screen.",
+        "Quote detail displays customer info, line items, and totals clearly."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/quotes/QuotesListPage.tsx",
+          "operation": "create",
+          "description": "Create quotes list page showing existing quotes with key summary fields and navigation to quote detail. Compose existing shadcn/ui components. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/quotes/CreateQuotePage.tsx",
+          "operation": "create",
+          "description": "Create quote creation flow: select customer (from customers list), add one or more inventory items as line items, set quantities and unit prices (snapshot), and submit create to backend; show returned totals and confirmation state. Compose existing shadcn/ui components (select/combobox where available, input, button, table, card). Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/quotes/QuoteDetailPage.tsx",
+          "operation": "create",
+          "description": "Create quote detail view that loads quote by id and displays customer info, line items, and backend-computed totals clearly (subtotal and total at minimum). Compose existing shadcn/ui components. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Register Quotes routes (list, create, detail) and add navigation wiring so Quotes pages are reachable only when authenticated."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Apply a consistent Tailwind-based theme and shared layout with navigation across Inventory, Customers, and Quotes.",
+      "acceptanceCriteria": [
+        "App has a consistent visual style (colors, typography, spacing) across Inventory, Customers, and Quotes pages.",
+        "App includes a clear navigation structure to access Inventory, Customers, and Quotes.",
+        "User-facing text is in English and uses consistent labeling (e.g., “Customers”, “Inventory”, “Quotes”)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/layout/AppLayout.tsx",
+          "operation": "create",
+          "description": "Create a shared authenticated layout with top navigation (Inventory/Customers/Quotes) and a consistent page container. Compose existing shadcn/ui components (e.g., navigation/menu, button, separators) without editing immutable component files. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/layout/PageHeader.tsx",
+          "operation": "create",
+          "description": "Add a small shared page header component for consistent titles/actions across sections, using Tailwind utilities and composed shadcn/ui components. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Refine global Tailwind base styles to ensure consistent typography, spacing, and background/foreground usage across all pages (using existing Tailwind setup)."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire AppLayout into authenticated routes so Inventory/Customers/Quotes share consistent navigation and theme application."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-implement-internet-identity-sign-in-and-require-authentication-to-access-inventory-customers-and-quotes-screens",
+      "featureTitle": "Implement Internet Identity sign-in and require authentication to access inventory, customers, and quotes screens.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/auth/AccessDeniedScreen.tsx",
+        "frontend/src/components/auth/LoginButton.tsx",
+        "frontend/src/main.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-backend-data-models-and-apis-to-manage-inventory-items-including-create-read-update-delete-and-stock-level-adjustments",
+      "featureTitle": "Create backend data models and APIs to manage inventory items, including create/read/update/delete and stock level adjustments.",
+      "files": [
+        "frontend/src/utils/format.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-an-inventory-ui-list-view-with-search-filter-item-detail-edit-form-and-controls-to-adjust-stock-quantity",
+      "featureTitle": "Build an Inventory UI: list view with search/filter, item detail/edit form, and controls to adjust stock quantity.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/pages/inventory/InventoryItemDetailPage.tsx",
+        "frontend/src/pages/inventory/InventoryItemForm.tsx",
+        "frontend/src/pages/inventory/InventoryListPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-customers-ui-list-view-with-search-customer-detail-edit-form-and-delete-flow",
+      "featureTitle": "Build a Customers UI: list view with search, customer detail/edit form, and delete flow.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/pages/customers/CustomerDetailPage.tsx",
+        "frontend/src/pages/customers/CustomerForm.tsx",
+        "frontend/src/pages/customers/CustomersListPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-a-quotes-ui-create-quote-flow-select-customer-add-line-items-from-inventory-set-quantities-prices-quote-list-and-quote-detail-view-with-totals",
+      "featureTitle": "Build a Quotes UI: create-quote flow (select customer, add line items from inventory, set quantities/prices), quote list, and quote detail view with totals.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/pages/quotes/CreateQuotePage.tsx",
+        "frontend/src/pages/quotes/QuoteDetailPage.tsx",
+        "frontend/src/pages/quotes/QuotesListPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-coherent-distinct-visual-theme-and-layout-for-the-whole-app-navigation-pages-using-tailwind-and-existing-ui-components-and-apply-it-consistently",
+      "featureTitle": "Add a coherent, distinct visual theme and layout for the whole app (navigation + pages) using Tailwind and existing UI components, and apply it consistently.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/layout/AppLayout.tsx",
+        "frontend/src/components/layout/PageHeader.tsx",
+        "frontend/src/index.css"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

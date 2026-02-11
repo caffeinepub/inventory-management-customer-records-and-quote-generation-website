@@ -1,2 +1,3 @@
-# inventory-management-customer-records-and-quote-generation-website
-Exported from Caffeine project: Inventory management, customer records, and quote generation website
+## Inventory management, customer records, and quote generation website
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

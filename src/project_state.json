@@ -1,0 +1,98 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Build a website for inventory management, customer data handling, and payment quoting.",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-implement-internet-identity-sign-in-and-require-authentication-to-access-inventory-customers-and-quotes-screens",
+      "title": "Implement Internet Identity sign-in and require authentication to access inventory, customers, and quotes screens.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-backend-data-models-and-apis-to-manage-inventory-items-including-create-read-update-delete-and-stock-level-adjustments",
+      "title": "Create backend data models and APIs to manage inventory items, including create/read/update/delete and stock level adjustments.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-an-inventory-ui-list-view-with-search-filter-item-detail-edit-form-and-controls-to-adjust-stock-quantity",
+      "title": "Build an Inventory UI: list view with search/filter, item detail/edit form, and controls to adjust stock quantity.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-customers-ui-list-view-with-search-customer-detail-edit-form-and-delete-flow",
+      "title": "Build a Customers UI: list view with search, customer detail/edit form, and delete flow.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-a-quotes-ui-create-quote-flow-select-customer-add-line-items-from-inventory-set-quantities-prices-quote-list-and-quote-detail-view-with-totals",
+      "title": "Build a Quotes UI: create-quote flow (select customer, add line items from inventory, set quantities/prices), quote list, and quote detail view with totals.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-coherent-distinct-visual-theme-and-layout-for-the-whole-app-navigation-pages-using-tailwind-and-existing-ui-components-and-apply-it-consistently",
+      "title": "Add a coherent, distinct visual theme and layout for the whole app (navigation + pages) using Tailwind and existing UI components, and apply it consistently.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Inventory management module (manage items, stock levels, and updates)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Customer data handling (store/manage customer profiles and related data)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Payment quote feature (generate quotes for customers/orders)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Create backend data models and APIs to manage customer profiles, including create/read/update/delete and ability to list customers.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Implement quote generation: backend data model and APIs to create a quote for a customer with line items, calculate totals, and list/view quotes.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Inventory management, customer records, and quote generation website",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

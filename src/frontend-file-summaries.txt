@@ -1,0 +1,23 @@
+{
+  "frontend/src/App.tsx": "Main application component with TanStack Router setup, authentication gating, and routes for inventory, customers, and quotes pages (removed profile setup modal).",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for all backend operations including authorization, products, customers, and quotes with proper cache invalidation (removed non-existent user profile methods).",
+  "frontend/src/utils/format.ts": "Utility functions for formatting currency, dates, and converting bigint values to numbers for display.",
+  "frontend/src/components/auth/LoginScreen.tsx": "Full-screen login page with Internet Identity authentication and branded design.",
+  "frontend/src/components/auth/ProfileSetupModal.tsx": "Modal dialog for first-time user profile setup requiring name input.",
+  "frontend/src/components/auth/LoginButton.tsx": "Reusable login/logout button component with loading states and query cache clearing on logout.",
+  "frontend/src/components/auth/AccessDeniedScreen.tsx": "Error screen displayed when users lack authorization with sign-out option.",
+  "frontend/src/components/layout/AppLayout.tsx": "Main authenticated layout with header navigation, truncated principal display, and footer with attribution.",
+  "frontend/src/components/layout/PageHeader.tsx": "Reusable page header component with title, description, and action buttons.",
+  "frontend/src/pages/inventory/InventoryListPage.tsx": "Inventory list page with search, table view, stock level indicators, and create/edit/delete actions using typed Link params.",
+  "frontend/src/pages/inventory/InventoryItemForm.tsx": "Dialog form for creating and editing inventory products with validation.",
+  "frontend/src/pages/inventory/InventoryItemDetailPage.tsx": "Product detail page with stock adjustment controls and edit/delete actions.",
+  "frontend/src/pages/customers/CustomersListPage.tsx": "Customer list page with search functionality and table view with edit/delete actions using typed Link params.",
+  "frontend/src/pages/customers/CustomerForm.tsx": "Dialog form for creating and editing customer records with contact information fields.",
+  "frontend/src/pages/customers/CustomerDetailPage.tsx": "Customer detail page showing contact information and recent quotes with edit/delete actions using typed Link params.",
+  "frontend/src/pages/quotes/QuotesListPage.tsx": "Quotes list page with search and table view showing quote summaries and totals using typed Link params.",
+  "frontend/src/pages/quotes/CreateQuotePage.tsx": "Quote creation page with customer selection, line item management, and real-time total calculation.",
+  "frontend/src/pages/quotes/QuoteDetailPage.tsx": "Quote detail page displaying customer info, line items, and calculated totals.",
+  "frontend/src/index.css": "Global styles with OKLCH color system customized with purple/blue primary colors and proper light/dark mode support.",
+  "frontend/tailwind.config.js": "Tailwind configuration with custom fonts (Inter, JetBrains Mono), extended color tokens, and custom shadows.",
+  "frontend/src/main.tsx": "Application entry point with QueryClient, InternetIdentity, ThemeProvider, and Toaster setup."
+}

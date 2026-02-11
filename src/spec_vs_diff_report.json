@@ -1,0 +1,92 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-11T15:07:01.046Z",
+  "summary": "Diff adds a full frontend app (routing, layout/theme, Inventory/Customers/Quotes pages) and a new single Motoko backend actor with product/customer/quote types and some product CRUD + access control. Several backend data model/API details for inventory, customers, and quotes do not match the BuildRequest acceptance criteria based on the visible diff summary.",
+  "missing_requirements": [
+    {
+      "id": "REQ-2",
+      "requirement": "Inventory items must include at least: id, name, SKU (string), unit price (number), stock quantity (integer), optional description; and backend must expose CRUD + dedicated stock increment/decrement method.",
+      "reason": "Backend Product model uses `id` as the identifier (and frontend treats it as SKU), but there is no separate `SKU` field. `description` is not optional (it is `Text`), and the stock adjustment method signature shown (`adjustProductStock(id, quantity)`) looks like setting an absolute quantity rather than increment/decrement; truncation prevents confirming increment/decrement semantics.",
+      "evidence": [
+        "backend/main.mo (Product type: { id; name; description; price; quantity })",
+        "backend/main.mo (public shared func adjustProductStock(id : ProductId, quantity : Nat) : async ())",
+        "frontend/src/pages/inventory/InventoryItemDetailPage.tsx (computes newStock and calls adjustProductStock with absolute BigInt(newStock))"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "requirement": "Customers must include at least: id, full name, optional email/phone/billing address/notes; backend must expose customer CRUD and list.",
+      "reason": "Backend Customer model fields do not match: it has `name`, `email`, `phone`, `address` all as required `Text` fields and lacks `notes` and a `billing address` field (only `address`). Truncation prevents verifying presence of all required customer CRUD/list methods in backend.",
+      "evidence": [
+        "backend/main.mo (Customer type: { id; name; email; phone; address })"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "requirement": "Quotes must include: id, customerId, status, createdAt, line items, subtotal, optional discount, optional tax, total; backend computes totals deterministically and exposes quote create + add/update/remove line items + list/fetch APIs.",
+      "reason": "Backend Quote model shown lacks `status` and `discount` and makes `tax` non-optional; timestamp is `created` (Int) rather than clearly `createdAt`. Also frontend computes subtotal/tax/total client-side (fixed 22% tax) rather than relying on backend deterministic computation. Truncation prevents confirming required quote APIs (add/update/remove line items, list/fetch) exist on backend.",
+      "evidence": [
+        "backend/main.mo (Quote type: { id; customerId; customerName; lineItems; subtotal; tax; total; created })",
+        "frontend/src/pages/quotes/CreateQuotePage.tsx (calculates subtotal, tax=subtotal*0.22, total=subtotal+tax on client)"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Admin/user role-based access control with secret initialization token passed via URL parameter (`caffeineAdminToken`) and methods like `_initializeAccessControlWithSecret`.",
+      "reason": "BuildRequest requires Internet Identity authentication but does not request an admin-token bootstrap mechanism or role-based authorization scheme beyond requiring authentication for app screens.",
+      "evidence": [
+        "backend/main.mo (imports authorization/access-control and includes MixinAuthorization; admin checks like AccessControl.isAdmin)",
+        "frontend/src/hooks/useActor.ts (reads `caffeineAdminToken` from URL and calls actor._initializeAccessControlWithSecret(adminToken))"
+      ]
+    },
+    {
+      "description": "AccessDenied screen and permission-gated UX beyond basic authentication.",
+      "reason": "Not explicitly requested; requirement only states unauthenticated users must be prompted to sign in before data is shown.",
+      "evidence": [
+        "frontend/src/components/auth/AccessDeniedScreen.tsx"
+      ]
+    },
+    {
+      "description": "Caffeine.ai promotional footer link and branding elements.",
+      "reason": "Not part of requested functionality or UI acceptance criteria (theme/navigation were requested, but not third-party promotional links).",
+      "evidence": [
+        "frontend/src/components/layout/AppLayout.tsx (footer with caffeine.ai link and UTM parameters)"
+      ]
+    }
+  ],
+  "confidence": 0.66,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/auth/AccessDeniedScreen.tsx",
+    "frontend/src/components/auth/LoginButton.tsx",
+    "frontend/src/components/auth/LoginScreen.tsx",
+    "frontend/src/components/auth/ProfileSetupModal.tsx",
+    "frontend/src/components/layout/AppLayout.tsx",
+    "frontend/src/components/layout/PageHeader.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/customers/CustomerDetailPage.tsx",
+    "frontend/src/pages/customers/CustomerForm.tsx",
+    "frontend/src/pages/customers/CustomersListPage.tsx",
+    "frontend/src/pages/inventory/InventoryItemDetailPage.tsx",
+    "frontend/src/pages/inventory/InventoryItemForm.tsx",
+    "frontend/src/pages/inventory/InventoryListPage.tsx",
+    "frontend/src/pages/quotes/CreateQuotePage.tsx",
+    "frontend/src/pages/quotes/QuoteDetailPage.tsx",
+    "frontend/src/pages/quotes/QuotesListPage.tsx",
+    "frontend/src/utils/format.ts",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}
